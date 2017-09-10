@@ -56,7 +56,7 @@ public class Planet_Rotation : MonoBehaviour {
 
 				planet_Multiplication[i] += Time.deltaTime * 1.05f;
 
-				print("Multi : " + planet_Multiplication[i]);
+				//print("Multi : " + planet_Multiplication[i]);
 			}
 
 			//Test Function
