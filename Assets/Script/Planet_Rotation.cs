@@ -9,7 +9,7 @@ public class Planet_Rotation : MonoBehaviour {
 
 	public float Multiply;
 
-	private Rigidbody planet;
+	private Rigidbody rock;
 
 	//public float Sun_mass;
 
@@ -17,7 +17,7 @@ public class Planet_Rotation : MonoBehaviour {
 
 	private List<float> planet_mass;
 
-	private string Object_name;
+	private List<float> planet_Multiplication;
 
 	private bool enter_Range = false;
 	private bool collider_planet = false;
@@ -25,18 +25,14 @@ public class Planet_Rotation : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		planet = GetComponent<Rigidbody>();
+		rock = GetComponent<Rigidbody>();
 
 		planet_position = new List<Vector3>();
 		planet_mass = new List<float>();
-
-		//Sun_mass = GameObject.Find(Object_name).GetComponent<Rigidbody>().mass;
-		/*Sun_mass = 100f;
-		float initV = Mathf.Sqrt(2f * Constant_G * Sun_mass / planet.position.magnitude);
-		GetComponent<Rigidbody>().velocity = new Vector3(initV * 2f, 0, 0);*/
+		planet_Multiplication = new List<float>();
 	}
-		
-	
+
+
 	void FixedUpdate (){
 
 		//The main function for compute gravitational force
@@ -47,20 +43,20 @@ public class Planet_Rotation : MonoBehaviour {
 
 			for(int i = 0; i < planet_position.Count; i++){
 
-				//print("exe");
-
 				float planet_m = planet_mass[i];
-				print("Plan_Mass : " + planet_m);
+				//print("Plan_Mass : " + planet_m);
 
-				float r = Vector3.Magnitude(transform.position);
-				float totalForce = -(Constant_G * planet_m * planet_m) / (r * r);
+				float r = Vector3.Magnitude(transform.position - planet_position[i]);
+				float totalForce = -(Constant_G * planet_m * rock.mass) / (r * r);
 				Vector3 force = -(planet_position[i] - transform.position).normalized * totalForce;
 
 				//print ("Plan_Pos : " + totalForce);
 
-				//force_value[i] += force;
-				GetComponent<Rigidbody>().AddForce(force * Multiply, ForceMode.Force);
+				rock.AddForce(force * planet_Multiplication[i], ForceMode.Force);
 
+				planet_Multiplication[i] += Time.deltaTime * 1.05f;
+
+				print("Multi : " + planet_Multiplication[i]);
 			}
 
 			//Test Function
@@ -76,8 +72,7 @@ public class Planet_Rotation : MonoBehaviour {
 
 		//If Collider with planet stop rigidbody
 		if(collider_planet){
-			planet = GetComponent<Rigidbody>();
-			planet.Sleep();
+			rock.Sleep();
 		}
 
 	}
@@ -98,16 +93,21 @@ public class Planet_Rotation : MonoBehaviour {
 			if(!planet_position.Contains(temp_pos.position)){
 				planet_position.Add(temp_pos.position);
 				planet_mass.Add(temp_mass);
+				planet_Multiplication.Add(Multiply);
 
-				print("Collider planet mass : " + temp_mass);
+				//print("Collider planet mass : " + temp_mass);
 				print("List len: " + planet_position.Count);
 			}
-			
-				
+
+
 
 		}else
 			enter_Range = false;
 
+	}
+
+	void OnTriggerExit(Collider col){
+		enter_Range = false;
 	}
 
 	//Collide with planet
