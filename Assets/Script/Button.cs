@@ -8,7 +8,7 @@ public class Button : MonoBehaviour {
 
 
 	public void LoadLevels(){
-		SceneManager.LoadScene ("Levels");
+		SceneManager.LoadScene ("Sence3");
 	}
 	public void Menu(){
 		SceneManager.LoadScene ("Menu");
