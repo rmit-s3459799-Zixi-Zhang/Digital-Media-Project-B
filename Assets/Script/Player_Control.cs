@@ -13,7 +13,7 @@ public class Player_Control : MonoBehaviour
 	private Vector3 shootDirection;
 	private bool isflying;
 	private Slider powerBar;
-
+	public float value;
 	private float rate;
 
 	void Awake()
@@ -24,15 +24,13 @@ public class Player_Control : MonoBehaviour
 		
 		isflying = false;
 		powerBar= GameObject.Find("Power").GetComponent<Slider>();
-
+		rb = GetComponent<Rigidbody>();
 	}
 	void Update() {
+		
 
 
 
-
-
-		rb = GetComponent<Rigidbody>();
 		Vector3 mousePosition = Input.mousePosition;
 		Debug.DrawLine (rb.position, mousePosition, Color.red);
 
@@ -47,10 +45,11 @@ public class Player_Control : MonoBehaviour
 		if (Input.GetMouseButton(0)&&isflying==false) {
 			speed = speed+(Time.deltaTime*rate); 
 			powerBar.value = speed;
+
 		}
 		if (Input.GetMouseButtonUp(0)&&isflying==false) {
 			shootDirection = mousePosition - rb.transform.position;
-			rb.velocity = new Vector2 (shootDirection.x * speed, shootDirection.y * speed);
+			rb.velocity = new Vector2 (shootDirection.x * speed/value, shootDirection.y * speed/value);
 			isflying = true;
 			powerBar.value = 0;
 		}
