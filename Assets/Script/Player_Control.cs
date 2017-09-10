@@ -27,9 +27,7 @@ public class Player_Control : MonoBehaviour
 		rb = GetComponent<Rigidbody>();
 	}
 	void Update() {
-
-
-
+		
 
 
 

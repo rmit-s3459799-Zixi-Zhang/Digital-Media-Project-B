@@ -4,12 +4,34 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Button : MonoBehaviour {
-	
-	public void NewBtn(){
+	public GameObject PauseMenu;
 
-		SceneManager.LoadScene ("Sence1");
+
+	public void LoadLevels(){
+		SceneManager.LoadScene ("Levels");
+	}
+	public void Menu(){
+		SceneManager.LoadScene ("Menu");
 	}
 	public void Exit(){
 		Application.Quit ();
+	}
+	public void Reload(){
+		Scene scene = SceneManager.GetActiveScene();
+		SceneManager.LoadScene(scene.name);
+	}
+	public void Cancel(){
+		PauseMenu.SetActive(false);
+		Time.timeScale = 1;
+	}
+	public void Pause(){
+		if (Time.timeScale == 1) {
+			PauseMenu.SetActive (true);
+			Time.timeScale = 0;
+		} else {
+			PauseMenu.SetActive (false);
+			Time.timeScale = 1;
+		}
+
 	}
 }
