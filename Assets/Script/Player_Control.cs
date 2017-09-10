@@ -24,7 +24,7 @@ public class Player_Control : MonoBehaviour
 		
 		isflying = false;
 		powerBar= GameObject.Find("Power").GetComponent<Slider>();
-
+		rb = GetComponent<Rigidbody>();
 	}
 	void Update() {
 
@@ -32,7 +32,7 @@ public class Player_Control : MonoBehaviour
 
 
 
-		rb = GetComponent<Rigidbody>();
+
 		Vector3 mousePosition = Input.mousePosition;
 		Debug.DrawLine (rb.position, mousePosition, Color.red);
 
