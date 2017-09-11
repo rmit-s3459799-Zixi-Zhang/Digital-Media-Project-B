@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Player_Control : MonoBehaviour 
 { 
-	public Camera camera;
 	private Vector3 screenPos;
 	public float speed;
 	public float maxSpeed;
@@ -15,6 +14,8 @@ public class Player_Control : MonoBehaviour
 	private Slider powerBar;
 	public float value;
 	private float rate;
+
+	private bool On_Button;
 
 	void Awake()
 	{
@@ -26,10 +27,22 @@ public class Player_Control : MonoBehaviour
 		powerBar= GameObject.Find("Power").GetComponent<Slider>();
 		rb = GetComponent<Rigidbody>();
 	}
-	void Update() {
-		
 
+	void FixedUpdate() {
 
+		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+		RaycastHit hit = new RaycastHit ();
+
+		if (Physics.Raycast(ray, out hit)) {
+
+			if (hit.collider.gameObject.tag == "Button"){
+				On_Button = true;
+			}else
+				Mouse_function();
+		}
+	}
+
+	void Mouse_function(){
 
 		Vector3 mousePosition = Input.mousePosition;
 		Debug.DrawLine (rb.position, mousePosition, Color.red);
@@ -42,19 +55,19 @@ public class Player_Control : MonoBehaviour
 		if (speed >= maxSpeed) {
 			rate = -1;
 		}
-		if (Input.GetMouseButton(0)&&isflying==false) {
-			speed = speed+(Time.deltaTime*rate); 
+		if (Input.GetMouseButton(0) && isflying==false) {
+			speed = speed + (Time.deltaTime * rate); 
 			powerBar.value = speed;
 
 		}
-		if (Input.GetMouseButtonUp(0)&&isflying==false) {
+		if (Input.GetMouseButtonUp(0) && isflying==false) {
 			shootDirection = mousePosition - rb.transform.position;
-			rb.velocity = new Vector2 (shootDirection.x * speed/value, shootDirection.y * speed/value);
+			rb.velocity = new Vector2 (shootDirection.x * speed / value, shootDirection.y * speed / value);
 			isflying = true;
 			powerBar.value = 0;
 		}
-	
 	}
+
 	void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.2f)
 	{
 		GameObject myLine = new GameObject();
@@ -68,4 +81,5 @@ public class Player_Control : MonoBehaviour
 		lr.SetPosition(1, end);
 		GameObject.Destroy(myLine, duration);
 	}
+		
 }

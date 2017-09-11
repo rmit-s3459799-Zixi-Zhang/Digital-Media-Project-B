@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Button : MonoBehaviour {
+	
 	public GameObject PauseMenu;
-
 
 	public void LoadLevels(){
 		SceneManager.LoadScene ("Sence3");
