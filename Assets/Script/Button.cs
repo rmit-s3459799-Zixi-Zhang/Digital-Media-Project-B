@@ -9,9 +9,11 @@ public class Button : MonoBehaviour {
 
 	public void LoadLevels(){
 		SceneManager.LoadScene ("Sence3");
+		Time.timeScale = 1;
 	}
 	public void Menu(){
 		SceneManager.LoadScene ("Menu");
+		Time.timeScale = 1;
 	}
 	public void Exit(){
 		Application.Quit ();
@@ -19,6 +21,7 @@ public class Button : MonoBehaviour {
 	public void Reload(){
 		Scene scene = SceneManager.GetActiveScene();
 		SceneManager.LoadScene(scene.name);
+		Time.timeScale = 1;
 	}
 	public void Cancel(){
 		PauseMenu.SetActive(false);

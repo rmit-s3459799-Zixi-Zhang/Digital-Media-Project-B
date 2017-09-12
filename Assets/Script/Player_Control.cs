@@ -29,16 +29,16 @@ public class Player_Control : MonoBehaviour
 	}
 
 	void FixedUpdate() {
-
+		Mouse_function();
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit = new RaycastHit ();
 
 		if (Physics.Raycast(ray, out hit)) {
 
-			if (hit.collider.gameObject.tag == "Button"){
-				On_Button = true;
-			}else
-				Mouse_function();
+			if (hit.collider.gameObject.tag != "Button"){
+				
+			}
+				
 		}
 	}
 
