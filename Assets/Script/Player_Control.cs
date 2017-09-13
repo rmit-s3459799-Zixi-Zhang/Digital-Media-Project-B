@@ -15,7 +15,7 @@ public class Player_Control : MonoBehaviour
 	public float value;
 	private float rate;
 
-	private bool On_Button;
+	private bool On_Button = false;
 
 	void Awake()
 	{
@@ -29,17 +29,17 @@ public class Player_Control : MonoBehaviour
 	}
 
 	void FixedUpdate() {
-		Mouse_function();
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-		RaycastHit hit = new RaycastHit ();
 
-		if (Physics.Raycast(ray, out hit)) {
+		if(!On_Button)
+			Mouse_function();
 
-			if (hit.collider.gameObject.tag != "Button"){
-				
-			}
-				
-		}
+		//print(On_Button);
+
+		/*if (GameObject.Find("PauseMenu").GetComponent<Button>().PauseMenu.activeSelf == false)
+			Mouse_function();
+
+		print(GameObject.Find("PauseMenu").GetComponent<Button>().PauseMenu.activeSelf);*/
+
 	}
 
 	void Mouse_function(){
@@ -81,5 +81,13 @@ public class Player_Control : MonoBehaviour
 		lr.SetPosition(1, end);
 		GameObject.Destroy(myLine, duration);
 	}
-		
+
+	public void Mouse_On_Button(){
+		On_Button = true;
+	}
+
+	public void Mouse_Exit(){
+		On_Button = false;
+	}
+
 }

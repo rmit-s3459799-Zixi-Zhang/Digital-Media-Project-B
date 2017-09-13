@@ -10,6 +10,6 @@ public class Atmosphere : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		SpriteRenderer.color = new Color (1f, 1f, 1f, 5f);
+		//SpriteRenderer.color = new Color (1f, 1f, 1f, 5f);
 	}
 }
