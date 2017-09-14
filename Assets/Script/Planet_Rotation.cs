@@ -22,6 +22,9 @@ public class Planet_Rotation : MonoBehaviour {
 	private bool enter_Range = false;
 	private bool collider_planet = false;
 
+	private bool Win = false;
+
+	public GameObject Menu;
 
 	// Use this for initialization
 	void Start () {
@@ -75,6 +78,10 @@ public class Planet_Rotation : MonoBehaviour {
 			rock.Sleep();
 		}
 
+		if(Win){
+			Menu.SetActive(true);
+		}
+
 	}
 
 	//Entering Gravitational Range
@@ -115,6 +122,11 @@ public class Planet_Rotation : MonoBehaviour {
 
 		if(col.gameObject.tag == "planet"){
 			//print("true1");
+			collider_planet = true;
+		}
+
+		else if(col.gameObject.tag == "Target"){
+			Win = true;
 			collider_planet = true;
 		}
 
