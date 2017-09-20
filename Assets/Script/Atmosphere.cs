@@ -27,25 +27,34 @@ public class Atmosphere : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		
-		if(Increase_alpha){
-			tmp_color.a += Time.fixedDeltaTime;
-		}
+		if (change_Color_Trigger){
 
-		if (tmp_color.a >= Transparency_max){
-			Increase_alpha = false;
-			decrease_alpha = true;
-		}
+			if(Increase_alpha){
+				tmp_color.a += Time.fixedDeltaTime;
+			}
 
-		if(decrease_alpha){
-			tmp_color.a -= Time.fixedDeltaTime;
-		}
+			if (tmp_color.a >= Transparency_max){
+				Increase_alpha = false;
+				decrease_alpha = true;
+			}
 
-		if (tmp_color.a <= Transparency_min){
-			Increase_alpha = true;
-			decrease_alpha = false;
-		}
+			if(decrease_alpha){
+				tmp_color.a -= Time.fixedDeltaTime;
+			}
 
-		spRend.color = tmp_color;
+			if (tmp_color.a <= Transparency_min){
+				Increase_alpha = true;
+				decrease_alpha = false;
+			}
+
+			spRend.color = tmp_color;
+
+		}else{
+
+			Color color = spRend.color;
+			color.a = Transparency_min;
+			spRend.color = color;
+		}
 
 		//print("Alpha val : " + spRend.color.a);
 	}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Planet_Rotation : MonoBehaviour {
 
@@ -25,6 +26,7 @@ public class Planet_Rotation : MonoBehaviour {
 	private bool Win = false;
 
 	public GameObject Menu;
+	public GameObject Win_MSG;
 
 	// Use this for initialization
 	void Start () {
@@ -80,6 +82,7 @@ public class Planet_Rotation : MonoBehaviour {
 
 		if(Win){
 			Menu.SetActive(true);
+			Win_MSG.SetActive(true);
 		}
 
 	}
@@ -96,6 +99,8 @@ public class Planet_Rotation : MonoBehaviour {
 			Transform temp_pos = Col.GetComponentInParent<Transform>().transform;
 			float temp_mass = Col.GetComponentInParent<Rigidbody>().mass;
 
+			//Trigger On atmo change
+			Col.gameObject.GetComponent<Atmosphere>().change_Color_Trigger = true;
 
 			if(!planet_position.Contains(temp_pos.position)){
 				planet_position.Add(temp_pos.position);
