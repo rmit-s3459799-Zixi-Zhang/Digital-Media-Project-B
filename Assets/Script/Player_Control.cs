@@ -41,7 +41,7 @@ public class Player_Control : MonoBehaviour
 			Vector3 mousePosition = Input.mousePosition;
 			Debug.DrawLine (rb.position, mousePosition, Color.red);
 
-			DrawLine(transform.position, Input.mousePosition);
+			DrawLine(transform.position, Camera.main.WorldToScreenPoint(Input.mousePosition));
 
 			rb.transform.eulerAngles = new Vector3(0,0,Mathf.Atan2((mousePosition.y - transform.position.y), (mousePosition.x - transform.position.x))*Mathf.Rad2Deg - 90);
 			if(speed <= 0)
@@ -81,6 +81,12 @@ public class Player_Control : MonoBehaviour
 
 	void DrawLine(Vector3 start, Vector3 end)
 	{
+		/*print(Input.mousePosition);
+
+		Vector3 tmp = end - start;
+		float angle = Mathf.Atan2 (tmp.y, tmp.x) * Mathf.Rad2Deg + 90;
+		transform.rotation = Quaternion.AngleAxis (angle, Vector3.forward);
+
 		Color init_color = Color.red;
 		if(!isflying){
 			//GameObject myLine = new GameObject();
@@ -93,11 +99,19 @@ public class Player_Control : MonoBehaviour
 			lr.startColor = init_color;
 			lr.startWidth = 0.3f;
 			lr.endWidth = 0.2f;
-			lr.SetPosition(0, start);
-			lr.SetPosition(1, end);
+			//lr.SetPosition(0, tmp);
+			//lr.SetPosition(1, tmp1);
+			lr.useWorldSpace = true;
+			lr.SetPosition(0, this.transform.position);
+			lr.SetPosition(1, this.transform.position + tmp);
 		}else{
 			lr.enabled = false;
-		}
+		}*/
+
+		Vector3 tmp = end -start;
+
+
+
 	}
 
 	/*void OnGUI(){

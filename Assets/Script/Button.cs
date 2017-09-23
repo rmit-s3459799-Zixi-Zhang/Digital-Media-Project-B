@@ -8,7 +8,15 @@ public class Button : MonoBehaviour {
 	public GameObject PauseMenu;
 
 	public void LoadLevels(){
-		SceneManager.LoadScene ("Sence3");
+		SceneManager.LoadScene ("level");
+		Time.timeScale = 1;
+	}
+	public void LoadLevel1(){
+		SceneManager.LoadScene ("level1");
+		Time.timeScale = 1;
+	}
+	public void LoadLevel2(){
+		SceneManager.LoadScene ("level2");
 		Time.timeScale = 1;
 	}
 	public void Menu(){
