@@ -12,12 +12,11 @@ public class Player_Control : MonoBehaviour
 	private Vector3 shootDirection;
 	private bool isflying;
 	private Slider powerBar;
-	public float value;
+	public float Multiplyer;
 	private float rate;
 
 	private bool On_Button = false;
 
-	public Texture arrow;
 	private LineRenderer lr;
 
 	private bool Mouse_tri = false;
@@ -42,7 +41,7 @@ public class Player_Control : MonoBehaviour
 			//mousePosition.z = 0;
 			//Vector3 mousePosition = Input.mousePosition;
 			//Debug.DrawLine (rb.position, mousePosition, Color.red);
-			print (rb.transform.position);
+			//print (rb.transform.position);
 			DrawLine(transform.position, mousePosition);
 
 			rb.transform.eulerAngles = new Vector3(0,0,Mathf.Atan2((mousePosition.y - transform.position.y), (mousePosition.x - transform.position.x))*Mathf.Rad2Deg - 90);
@@ -75,7 +74,7 @@ public class Player_Control : MonoBehaviour
 				shootDirection.y = shootDirection.y / n;
 
 
-				rb.velocity = new Vector2 (shootDirection.x * speed*value, shootDirection.y * speed*value);
+				rb.velocity = new Vector2 (shootDirection.x * speed * Multiplyer, shootDirection.y * speed * Multiplyer);
 				isflying = true;
 				powerBar.value = 0;
 			}

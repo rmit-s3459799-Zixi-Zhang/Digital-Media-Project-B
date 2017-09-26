@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class Planet_Rotation : MonoBehaviour {
 
+	public float Mass_Modify;
+
 	public float Constant_G = 1f;
 
 	public float Multiply;
 
 	private Rigidbody rock;
-
-	//public float Sun_mass;
 
 	private List<Vector3> planet_position;
 
@@ -102,7 +102,7 @@ public class Planet_Rotation : MonoBehaviour {
 			//Trigger On atmo change
 			Col.gameObject.GetComponent<Atmosphere>().change_Color_Trigger = true;
 
-			if(!planet_position.Contains(temp_pos.position)){
+			if(!planet_position.Contains(temp_pos.position) && !Win){
 				planet_position.Add(temp_pos.position);
 				planet_mass.Add(temp_mass);
 				planet_Multiplication.Add(Multiply);
@@ -120,6 +120,10 @@ public class Planet_Rotation : MonoBehaviour {
 
 	void OnTriggerExit(Collider col){
 		enter_Range = false;
+		if(col.gameObject.tag == "Range")
+			col.gameObject.GetComponent<Atmosphere>().change_Color_Trigger = false;
+
+
 	}
 
 	//Collide with planet
