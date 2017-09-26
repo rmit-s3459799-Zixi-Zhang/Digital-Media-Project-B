@@ -70,12 +70,12 @@ public class Player_Control : MonoBehaviour
 
 				shootDirection = mousePosition - rb.transform.position;
 
-				//float n = Mathf.Sqrt ((shootDirection.x * shootDirection.x) + (shootDirection.y * shootDirection.y));
-				//shootDirection.x = shootDirection.x / n;
-				//shootDirection.y = shootDirection.y / n;
+				float n = Mathf.Sqrt ((shootDirection.x * shootDirection.x) + (shootDirection.y * shootDirection.y));
+				shootDirection.x = shootDirection.x / n;
+				shootDirection.y = shootDirection.y / n;
 
 
-				rb.velocity = new Vector2 (shootDirection.x * speed, shootDirection.y * speed);
+				rb.velocity = new Vector2 (shootDirection.x * speed*value, shootDirection.y * speed*value);
 				isflying = true;
 				powerBar.value = 0;
 			}
