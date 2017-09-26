@@ -35,13 +35,15 @@ public class Player_Control : MonoBehaviour
 	}
 
 	void FixedUpdate() {
-
+		
 		if(!On_Button){
-			
-			Vector3 mousePosition = Input.mousePosition;
-			Debug.DrawLine (rb.position, mousePosition, Color.red);
 
-			DrawLine(transform.position, Camera.main.WorldToScreenPoint(Input.mousePosition));
+			Vector3 mousePosition = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 30));
+			//mousePosition.z = 0;
+			//Vector3 mousePosition = Input.mousePosition;
+			//Debug.DrawLine (rb.position, mousePosition, Color.red);
+			print (rb.transform.position);
+			DrawLine(transform.position, mousePosition);
 
 			rb.transform.eulerAngles = new Vector3(0,0,Mathf.Atan2((mousePosition.y - transform.position.y), (mousePosition.x - transform.position.x))*Mathf.Rad2Deg - 90);
 			if(speed <= 0)
@@ -53,6 +55,7 @@ public class Player_Control : MonoBehaviour
 			}
 			if (Input.GetMouseButton(0) && isflying==false) {
 				speed = speed + (Time.deltaTime * rate); 
+
 				powerBar.value = speed;
 				Mouse_tri = true;
 			}
@@ -63,8 +66,16 @@ public class Player_Control : MonoBehaviour
 				powerBar.value = 0;
 			}*/
 			if (Mouse_tri && !isflying && !Input.GetMouseButton(0)){
+
+
 				shootDirection = mousePosition - rb.transform.position;
-				rb.velocity = new Vector2 (shootDirection.x * speed / value, shootDirection.y * speed / value);
+
+				//float n = Mathf.Sqrt ((shootDirection.x * shootDirection.x) + (shootDirection.y * shootDirection.y));
+				//shootDirection.x = shootDirection.x / n;
+				//shootDirection.y = shootDirection.y / n;
+
+
+				rb.velocity = new Vector2 (shootDirection.x * speed, shootDirection.y * speed);
 				isflying = true;
 				powerBar.value = 0;
 			}
@@ -72,16 +83,13 @@ public class Player_Control : MonoBehaviour
 		}
 
 
-		/*if (GameObject.Find("PauseMenu").GetComponent<Button>().PauseMenu.activeSelf == false)
-			Mouse_function();
 
-		print(GameObject.Find("PauseMenu").GetComponent<Button>().PauseMenu.activeSelf);*/
 
 	}
 
 	void DrawLine(Vector3 start, Vector3 end)
 	{
-		/*print(Input.mousePosition);
+		//print(end);
 
 		Vector3 tmp = end - start;
 		float angle = Mathf.Atan2 (tmp.y, tmp.x) * Mathf.Rad2Deg + 90;
@@ -102,15 +110,13 @@ public class Player_Control : MonoBehaviour
 			//lr.SetPosition(0, tmp);
 			//lr.SetPosition(1, tmp1);
 			lr.useWorldSpace = true;
-			lr.SetPosition(0, this.transform.position);
-			lr.SetPosition(1, this.transform.position + tmp);
+			lr.SetPosition(0, start);
+			lr.SetPosition(1, end);
 		}else{
 			lr.enabled = false;
-		}*/
+		}
 
-		Vector3 tmp = end -start;
-
-
+		 tmp = end -start;
 
 	}
 

@@ -39,7 +39,7 @@ public class Planet_Rotation : MonoBehaviour {
 
 
 	void FixedUpdate (){
-
+		
 		//The main function for compute gravitational force
 		if (enter_Range && !collider_planet){
 
