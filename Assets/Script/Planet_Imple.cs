@@ -21,7 +21,7 @@ public class Planet_Imple : MonoBehaviour {
 	void Start(){
 		rb = GetComponent<Rigidbody>();
 		scale = new Vector3(1f, 1f, 0f);
-		Mass_Modify = 200;
+		//Mass_Modify = 200;
 		color_base_on_Mass = new Color(1f, 1f, 1f, 1f);
 		GetComponent<SpriteRenderer>().color = color_base_on_Mass;
 	}
