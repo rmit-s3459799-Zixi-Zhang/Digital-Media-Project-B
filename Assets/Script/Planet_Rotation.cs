@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class Planet_Rotation : MonoBehaviour {
 
 	public float Mass_Modify;
@@ -22,16 +22,17 @@ public class Planet_Rotation : MonoBehaviour {
 
 	private bool enter_Range = false;
 	private bool collider_planet = false;
-
+	private int sceneIdex;
 	private bool Win = false;
 
 	public GameObject Menu;
 	public GameObject Win_MSG;
+	private Scene scene;
 
 	// Use this for initialization
 	void Start () {
 		rock = GetComponent<Rigidbody>();
-
+		sceneIdex = SceneManager.GetActiveScene().buildIndex;
 		planet_position = new List<Vector3>();
 		planet_mass = new List<float>();
 		planet_Multiplication = new List<float>();
@@ -83,6 +84,7 @@ public class Planet_Rotation : MonoBehaviour {
 		if(Win){
 			Menu.SetActive(true);
 			Win_MSG.SetActive(true);
+			GameManager.instance.levelClear[sceneIdex-1] = true;
 		}
 
 	}

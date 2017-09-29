@@ -7,18 +7,7 @@ public class Button : MonoBehaviour {
 	
 	public GameObject PauseMenu;
 
-	public void LoadLevels(){
-		SceneManager.LoadScene ("level");
-		Time.timeScale = 1;
-	}
-	public void LoadLevel1(){
-		SceneManager.LoadScene ("level1");
-		Time.timeScale = 1;
-	}
-	public void LoadLevel2(){
-		SceneManager.LoadScene ("level2");
-		Time.timeScale = 1;
-	}
+
 	public void Menu(){
 		SceneManager.LoadScene ("Menu");
 		Time.timeScale = 1;
@@ -43,6 +32,32 @@ public class Button : MonoBehaviour {
 			PauseMenu.SetActive (false);
 			Time.timeScale = 1;
 		}
-
 	}
+	public void LoadLevels(){
+		SceneManager.LoadScene ("level");
+		Time.timeScale = 1;
+	}
+	public void LoadLevel1(){
+		SceneManager.LoadScene ("level1");
+		Time.timeScale = 1;
+	}
+	public void LoadLevel2(){
+		if(GameManager.instance.levelClear[1]==true){
+			SceneManager.LoadScene ("level2");
+			Time.timeScale = 1;
+		}else{
+			print ("level2 is locked");
+		}
+	}
+	public void LoadLevel3(){
+		if(GameManager.instance.levelClear[2]==true){
+			SceneManager.LoadScene ("level3");
+			Time.timeScale = 1;
+		}else{
+			print ("level3 is locked");
+		}
+	}
+
+
+
 }
