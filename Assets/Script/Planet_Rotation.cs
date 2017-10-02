@@ -29,6 +29,8 @@ public class Planet_Rotation : MonoBehaviour {
 	public GameObject Win_MSG;
 	private Scene scene;
 
+	public Vector2[] Border;
+
 	// Use this for initialization
 	void Start () {
 		rock = GetComponent<Rigidbody>();
@@ -79,6 +81,7 @@ public class Planet_Rotation : MonoBehaviour {
 		//If Collider with planet stop rigidbody
 		if(collider_planet){
 			rock.Sleep();
+			GameObject.Find("PausedMenu").GetComponent<Button>().Pause();
 		}
 
 		if(Win){
@@ -87,6 +90,10 @@ public class Planet_Rotation : MonoBehaviour {
 			GameManager.instance.levelClear[sceneIdex-1] = true;
 		}
 
+		if(transform.position.x <= Border[0].x || transform.position.x >= Border[1].x
+			|| transform.position.y <= Border[1].y || transform.position.y >= Border[0].y ){
+			GameObject.Find("PausedMenu").GetComponent<Button>().Pause();
+		}
 	}
 
 	//Entering Gravitational Range
