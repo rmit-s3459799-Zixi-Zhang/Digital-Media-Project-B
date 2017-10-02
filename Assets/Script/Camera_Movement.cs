@@ -19,13 +19,13 @@ public class Camera_Movement : MonoBehaviour {
 
 		if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness){
 
-			pos.z += panSpeed * Time.deltaTime;
+			pos.y += panSpeed * Time.deltaTime;
 
 		}
 
 		if (Input.GetKey("s") || Input.mousePosition.y <= panBorderThickness){
 
-			pos.z -= panSpeed * Time.deltaTime;
+			pos.y -= panSpeed * Time.deltaTime;
 
 		}
 
@@ -43,11 +43,11 @@ public class Camera_Movement : MonoBehaviour {
 
 		float Scroll = Input.GetAxis("Mouse ScrollWheel");
 
-		pos.y += Scroll * scrollSpeed * Time.deltaTime;
+		pos.z += Scroll * scrollSpeed * Time.deltaTime;
 
 
 		pos.x = Mathf.Clamp(pos.x, -Screen_Limit.x, Screen_Limit.x);
-		pos.z = Mathf.Clamp(pos.z, -Screen_Limit.y, Screen_Limit.y);
+		pos.z = Mathf.Clamp(pos.z, -Screen_Limit.y, -20f);
 
 		pos.y = Mathf.Clamp(pos.y, minY, maxY);
 
