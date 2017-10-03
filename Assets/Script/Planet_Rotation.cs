@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class Planet_Rotation : MonoBehaviour {
 
-	public float Mass_Modify;
+	//public float Mass_Modify;
 
 	public float Constant_G = 1f;
 
@@ -19,6 +19,9 @@ public class Planet_Rotation : MonoBehaviour {
 	private List<float> planet_mass;
 
 	private List<float> planet_Multiplication;
+
+	private List<Vector3> planet_push_pos;
+	private List<float> planet_push_mass;
 
 	private bool enter_Range = false;
 	private bool collider_planet = false;
@@ -38,13 +41,16 @@ public class Planet_Rotation : MonoBehaviour {
 		planet_position = new List<Vector3>();
 		planet_mass = new List<float>();
 		planet_Multiplication = new List<float>();
+
+		planet_push_pos = new List<Vector3>();
+		planet_push_mass = new List<float>();
 	}
 
 
 	void FixedUpdate (){
 		
 		//The main function for compute gravitational force
-		if (enter_Range && !collider_planet){
+		if (!collider_planet){
 
 			//No function !!!
 			//Vector3[] force_value = new Vector3[planet_position.Count];
@@ -67,15 +73,17 @@ public class Planet_Rotation : MonoBehaviour {
 				//print("Multi : " + planet_Multiplication[i]);
 			}
 
-			//Test Function
-			/*Vector3 final_force = new Vector3(0f, 0f, 0f);
-			foreach(Vector3 i in force_value){
+			for(int i = 0; i < planet_push_pos.Count; i++){
 
-				final_force += i;
+				float planet_m = planet_push_mass[i];
+
+				float r = Vector3.Magnitude(transform.position - planet_push_pos[i]);
+				float totalForce = -(Constant_G * planet_m * rock.mass) / (r * r);
+				Vector3 force = (planet_push_pos[i] - transform.position).normalized * totalForce;
+
+				rock.AddForce(force * 5.0f, ForceMode.Force);
 
 			}
-			print("Final force : " + final_force);
-			GetComponent<Rigidbody>().AddForce(final_force * Multiply, ForceMode.Force);*/
 		}
 
 		//If Collider with planet stop rigidbody
@@ -103,7 +111,7 @@ public class Planet_Rotation : MonoBehaviour {
 		if(Col.gameObject.tag == "Range"){
 			//print("true");
 
-			enter_Range = true;
+			//enter_Range = true;
 
 			Transform temp_pos = Col.GetComponentInParent<Transform>().transform;
 			float temp_mass = Col.GetComponentInParent<Rigidbody>().mass;
@@ -117,21 +125,75 @@ public class Planet_Rotation : MonoBehaviour {
 				planet_Multiplication.Add(Multiply);
 
 				//print("Collider planet mass : " + temp_mass);
-				print("List len: " + planet_position.Count);
+				print("List len Pos: " + planet_position.Count);
+
 			}
 
 
 
-		}else
-			enter_Range = false;
+		}
+
+		if(Col.gameObject.tag == "Push"){
+
+			Transform temp_pos = Col.GetComponentInParent<Transform>().transform;
+			float temp_mass = Col.GetComponentInParent<Rigidbody>().mass;
+
+			//Trigger On atmo change
+			Col.gameObject.GetComponent<Atmosphere>().change_Color_Trigger = true;
+
+			if(!planet_push_pos.Contains(temp_pos.position) && !Win){
+
+				planet_push_pos.Add(temp_pos.position);
+				planet_push_mass.Add(temp_mass);
+
+				print("Push List len : " + planet_push_pos.Count);
+
+			}
+
+		}
 
 	}
 
 	void OnTriggerExit(Collider col){
-		enter_Range = false;
-		if(col.gameObject.tag == "Range")
+		//enter_Range = false;
+
+		if(col.gameObject.tag == "Range"){
+
 			col.gameObject.GetComponent<Atmosphere>().change_Color_Trigger = false;
 
+			Transform temp_pos = col.GetComponentInParent<Transform>().transform;
+			//float temp_mass = col.GetComponentInParent<Rigidbody>().mass;
+
+			//Find index
+			int i = planet_position.IndexOf(temp_pos.position);
+
+			//Remove from list
+			planet_position.RemoveAt(i);
+			planet_mass.RemoveAt(i);
+			planet_Multiplication.RemoveAt(i);
+
+			print("-List len Pos: " + planet_position.Count);
+			//print("-List len Mas: " + planet_mass.Count);
+			//print("-List len Mul: " + planet_Multiplication.Count);
+
+		}
+
+		if(col.gameObject.tag == "Push"){
+
+			col.gameObject.GetComponent<Atmosphere>().change_Color_Trigger = false;
+
+			Transform temp_pos = col.GetComponentInParent<Transform>().transform;
+			//float temp_mass = col.GetComponentInParent<Rigidbody>().mass;
+
+			//Find index
+			int i = planet_push_pos.IndexOf(temp_pos.position);
+
+			//Remove from list
+			planet_push_pos.RemoveAt(i);
+			planet_push_mass.RemoveAt(i);
+
+			print("-Push len : " + planet_push_pos.Count);
+		}
 
 	}
 
