@@ -8,10 +8,13 @@ public class Camera_Movement : MonoBehaviour {
 	public float panBorderThickness = 10f;
 	public Vector2 Screen_Limit;
 
+	public float x_Left_and_right = 15f;
+
 	public float scrollSpeed = 200f;
-	public float minY = 20f;
-	public float maxY = 50f;
-	public float minZ = -15f;
+	public float minY;
+	public float maxY;
+	public float close_Z = -15f;
+	public float far_Z = -30f;
 
 	// Update is called once per frame
 	void Update () {
@@ -46,11 +49,19 @@ public class Camera_Movement : MonoBehaviour {
 
 		pos.z += Scroll * scrollSpeed * Time.deltaTime;
 
+		if(pos.z >= far_Z){
+			pos.y = Mathf.Clamp(pos.y, -(Mathf.Abs(minY)+(Mathf.Abs(far_Z)-Mathf.Abs(pos.z))/Mathf.Sqrt(3f)), 
+				Mathf.Abs(maxY)+(Mathf.Abs(far_Z)-Mathf.Abs(pos.z))/Mathf.Sqrt(3f));
+		}
 
-		pos.x = Mathf.Clamp(pos.x, -Screen_Limit.x, Screen_Limit.x);
-		pos.z = Mathf.Clamp(pos.z, -Screen_Limit.y, minZ);
+		if(pos.z >= far_Z){
+			//print("1 : " + (Mathf.Abs(far_Z)-Mathf.Abs(pos.z))/Mathf.Sqrt(3f));
+			//print("2 : " + (Mathf.Abs(far_Z)/Mathf.Sqrt(3f) - Mathf.Abs(pos.z)/Mathf.Sqrt(3f)));
+			pos.x = Mathf.Clamp(pos.x, -(x_Left_and_right + (Mathf.Abs(far_Z)-Mathf.Abs(pos.z))/Mathf.Sqrt(3f)), 
+				(x_Left_and_right + (Mathf.Abs(far_Z)-Mathf.Abs(pos.z))/Mathf.Sqrt(3f)));
+		}
 
-		pos.y = Mathf.Clamp(pos.y, minY, maxY);
+		pos.z = Mathf.Clamp(pos.z, far_Z, close_Z);
 
 		transform.position = pos;
 	}
