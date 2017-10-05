@@ -27,12 +27,13 @@ public class Planet_Rotation : MonoBehaviour {
 	private bool collider_planet = false;
 	private int sceneIdex;
 	private bool Win = false;
+	private bool out_of_boundry = false;
 
 	public GameObject Menu;
 	public GameObject Win_MSG;
 	private Scene scene;
 
-	public Vector2[] Border;
+	//public Vector2[] Border;
 
 	// Use this for initialization
 	void Start () {
@@ -98,9 +99,13 @@ public class Planet_Rotation : MonoBehaviour {
 			GameManager.instance.levelClear[sceneIdex-1] = true;
 		}
 
-		if(transform.position.x <= Border[0].x || transform.position.x >= Border[1].x
+		/*if(transform.position.x <= Border[0].x || transform.position.x >= Border[1].x
 			|| transform.position.y <= Border[1].y || transform.position.y >= Border[0].y ){
 			GameObject.Find("PausedMenu").GetComponent<Button>().Pause();
+		}*/
+		if(out_of_boundry){
+			GameObject.Find("PausedMenu").GetComponent<Button>().Pause();
+			out_of_boundry = false;
 		}
 	}
 
@@ -208,6 +213,10 @@ public class Planet_Rotation : MonoBehaviour {
 		else if(col.gameObject.tag == "Target"){
 			Win = true;
 			collider_planet = true;
+		}
+
+		if(col.gameObject.tag == "Border"){
+			out_of_boundry = true;
 		}
 
 	}
