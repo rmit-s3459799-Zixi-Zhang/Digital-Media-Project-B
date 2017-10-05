@@ -36,8 +36,8 @@ public class Player_Control : MonoBehaviour
 	void FixedUpdate() {
 		
 		if(!On_Button){
-
-			Vector3 mousePosition = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, 30));
+			float z = Camera.main.transform.position.z;
+			Vector3 mousePosition = Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, -z));
 			//mousePosition.z = 0;
 			//Vector3 mousePosition = Input.mousePosition;
 			//Debug.DrawLine (rb.position, mousePosition, Color.red);

@@ -57,6 +57,14 @@ public class Button : MonoBehaviour {
 			print ("level3 is locked");
 		}
 	}
+	public void LoadLevel4(){
+		if(GameManager.instance.levelClear[3]==true){
+			SceneManager.LoadScene ("level4");
+			Time.timeScale = 1;
+		}else{
+			print ("level4 is locked");
+		}
+	}
 
 
 
