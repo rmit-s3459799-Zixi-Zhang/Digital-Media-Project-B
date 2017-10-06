@@ -210,13 +210,17 @@ public class Planet_Rotation : MonoBehaviour {
 			collider_planet = true;
 		}
 
-		else if(col.gameObject.tag == "Target"){
+		if(col.gameObject.tag == "Target"){
 			Win = true;
 			collider_planet = true;
 		}
 
 		if(col.gameObject.tag == "Border"){
 			out_of_boundry = true;
+		}
+
+		if(col.gameObject.tag == "Rock"){
+			collider_planet = true;
 		}
 
 	}
