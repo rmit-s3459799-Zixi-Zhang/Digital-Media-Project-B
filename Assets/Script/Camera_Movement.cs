@@ -8,9 +8,13 @@ public class Camera_Movement : MonoBehaviour {
 	public float panBorderThickness = 10f;
 	public Vector2 Screen_Limit;
 
+	public float x_Left_and_right = 15f;
+
 	public float scrollSpeed = 200f;
-	public float minY = 20f;
-	public float maxY = 50f;
+	public float minY;
+	public float maxY;
+	public float close_Z = -15f;
+	public float far_Z = -30f;
 
 	// Update is called once per frame
 	void Update () {
@@ -19,13 +23,13 @@ public class Camera_Movement : MonoBehaviour {
 
 		if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness){
 
-			pos.z += panSpeed * Time.deltaTime;
+			pos.y += panSpeed * Time.deltaTime;
 
 		}
 
 		if (Input.GetKey("s") || Input.mousePosition.y <= panBorderThickness){
 
-			pos.z -= panSpeed * Time.deltaTime;
+			pos.y -= panSpeed * Time.deltaTime;
 
 		}
 
@@ -43,13 +47,21 @@ public class Camera_Movement : MonoBehaviour {
 
 		float Scroll = Input.GetAxis("Mouse ScrollWheel");
 
-		pos.y += Scroll * scrollSpeed * Time.deltaTime;
+		pos.z += Scroll * scrollSpeed * Time.deltaTime;
 
+		if(pos.z >= far_Z){
+			pos.y = Mathf.Clamp(pos.y, -(Mathf.Abs(minY)+(Mathf.Abs(far_Z)-Mathf.Abs(pos.z))/Mathf.Sqrt(3f)), 
+				Mathf.Abs(maxY)+(Mathf.Abs(far_Z)-Mathf.Abs(pos.z))/Mathf.Sqrt(3f));
+		}
 
-		pos.x = Mathf.Clamp(pos.x, -Screen_Limit.x, Screen_Limit.x);
-		pos.z = Mathf.Clamp(pos.z, -Screen_Limit.y, Screen_Limit.y);
+		if(pos.z >= far_Z){
+			//print("1 : " + (Mathf.Abs(far_Z)-Mathf.Abs(pos.z))/Mathf.Sqrt(3f));
+			//print("2 : " + (Mathf.Abs(far_Z)/Mathf.Sqrt(3f) - Mathf.Abs(pos.z)/Mathf.Sqrt(3f)));
+			pos.x = Mathf.Clamp(pos.x, -(x_Left_and_right + (Mathf.Abs(far_Z)-Mathf.Abs(pos.z))/Mathf.Sqrt(3f)), 
+				(x_Left_and_right + (Mathf.Abs(far_Z)-Mathf.Abs(pos.z))/Mathf.Sqrt(3f)));
+		}
 
-		pos.y = Mathf.Clamp(pos.y, minY, maxY);
+		pos.z = Mathf.Clamp(pos.z, far_Z, close_Z);
 
 		transform.position = pos;
 	}
