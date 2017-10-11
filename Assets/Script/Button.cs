@@ -130,5 +130,12 @@ public class Button : MonoBehaviour {
 			print ("level12 is locked");
 		}
 	}
+	public void UnLock(){
+
+		for (int i = 0; i < GameManager.instance.levelClear.Length; i++) {
+			GameManager.instance.levelClear [i] = true;
+		}
+
+	}
 
 }
