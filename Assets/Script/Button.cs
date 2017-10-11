@@ -13,6 +13,7 @@ public class Button : MonoBehaviour {
 		Time.timeScale = 1;
 	}
 	public void Exit(){
+		
 		Application.Quit ();
 	}
 	public void Reload(){

@@ -6,7 +6,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class Planet_Imple : MonoBehaviour {
 
-	[Range(200, 1000)]
+	[Range(200, 2000)]
 	public int Mass_Modify = 200;
 
 	[Range(0.2f, 10f)]
