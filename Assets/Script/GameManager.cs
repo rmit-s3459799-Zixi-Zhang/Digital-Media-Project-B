@@ -8,7 +8,7 @@ using System.IO;
 public class GameManager : MonoBehaviour {
 	public bool []levelClear;
 	public Scene scene;
-	public int a=8;
+	public int a=20;
 	public static GameManager instance;
 
 	void Awake()
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour {
 
 	void Start () {
 		
-	    levelClear=new bool[9];
+		levelClear=new bool[a];
 		for (int i = 0; i < levelClear.Length; i++) {
 			levelClear [i] = false;
 		}
