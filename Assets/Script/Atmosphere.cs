@@ -9,7 +9,7 @@ public class Atmosphere : MonoBehaviour {
 	private SpriteRenderer spRend;
 
 	//Range between alpha 80 to 210
-	private float Transparency_min = 0.5f;
+	private float Transparency_min = 0.1f;
 
 	private float Transparency_max = 1.0f;
 
